@@ -1,13 +1,22 @@
 <template>
   <div id="app">
-    <nav>
-      <router-link to="/login">Login</router-link> |
-      <router-link to="/register">Register</router-link> |
-      <router-link to="/about">About</router-link>
-    </nav>
+    <MainHeader />
+    <MainFooter />
     <router-view></router-view>
   </div>
 </template>
+
+<script>
+import MainHeader from './components/MainHeader.vue';
+import MainFooter from './components/MainFooter.vue';
+
+export default {
+  components: {
+    MainHeader,
+    MainFooter
+  }
+}
+</script>
 
 <style lang="scss">
 #app {
