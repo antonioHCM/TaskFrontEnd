@@ -4,6 +4,7 @@ import LoginView from '../views/LoginView'
 import RegisterView from '../views/RegisterView'
 import ContactView from '../views/ContactView'
 import DashboardView from '../views/DashboardView'
+import BoardView from '../views/BoardView'
 
 const routes = [
   {
@@ -25,7 +26,12 @@ const routes = [
     path: '/dashboard',
     name: 'Dashboard',
     component: DashboardView
-  }, 
+  },
+  {
+    path: '/board/:id',
+    name: 'Board',
+    component: BoardView
+  },  
   {
     path: '/contact',
     name: 'Contact',
