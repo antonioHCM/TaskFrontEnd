@@ -6,5 +6,8 @@ module.exports = {
     getProjectByUser: base + "project/user/:id",
     getProjectById: base + "project/:id",
     getColumnsByProject: base + "project/:id/columns",
-    getRowsByColumn: base + "column/:id/rows"
+    getRowsByColumn: base + "column/:id/rows",
+    addRowApi: base + "column/:id/rows",
+    updateRowData: base + "row/:id",
+    deleteRowData: base + "row/:id",
 }

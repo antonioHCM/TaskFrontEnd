@@ -5,6 +5,7 @@ import RegisterView from '../views/RegisterView'
 import ContactView from '../views/ContactView'
 import DashboardView from '../views/DashboardView'
 import BoardView from '../views/BoardView'
+import NewProjectView from '../views/NewProjectView'
 
 const routes = [
   {
@@ -31,7 +32,12 @@ const routes = [
     path: '/board/:id',
     name: 'Board',
     component: BoardView
-  },  
+  },
+  {
+    path: '/newProject',
+    name: 'newProject',
+    component: NewProjectView
+  },   
   {
     path: '/contact',
     name: 'Contact',
