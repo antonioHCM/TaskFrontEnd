@@ -1,20 +1,24 @@
 import { ref } from 'vue';
 import { useRouter } from 'vue-router';
 import { getUser } from '../../urls';
-import { jwtDecode } from 'jwt-decode'; 
+import { jwtDecode } from 'jwt-decode';
 
 export function useAuth() {
   const username = ref(null);
   const router = useRouter();
 
-  async function fetchUserInfo() {
+  function checkToken() {
     const token = localStorage.getItem('token');
     if (!token) {
       router.push('/login');
-      return;
+      throw new Error('No token found');
     }
+    return token;
+  }
 
+  async function fetchUserInfo() {
     try {
+      const token = checkToken(); // Call checkToken to ensure token existence
       const decodedToken = jwtDecode(token);
       const userId = decodedToken.id;
 
@@ -30,6 +34,7 @@ export function useAuth() {
 
       const userData = await response.json();
       username.value = userData.name;
+      console.log(username.value);
     } catch (error) {
       console.error('Error fetching user information:', error);
     }
@@ -37,8 +42,9 @@ export function useAuth() {
 
   function logout() {
     localStorage.removeItem('token');
+    username.value = null; // Set username to null upon logout
     router.push('/login');
   }
 
-  return { username, fetchUserInfo, logout };
+  return { username, fetchUserInfo, checkToken, logout };
 }
