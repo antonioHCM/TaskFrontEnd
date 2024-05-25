@@ -1,7 +1,8 @@
 import { ref } from 'vue';
 import { useRouter } from 'vue-router';
-import { getUser } from '../../urls';
+import { getUser, apiLogin } from '../../urls';
 import { jwtDecode } from 'jwt-decode';
+
 
 export function useAuth() {
   const username = ref(null);
@@ -34,10 +35,41 @@ export function useAuth() {
 
       const userData = await response.json();
       username.value = userData.name;
-      console.log(username.value);
+      
     } catch (error) {
       console.error('Error fetching user information:', error);
     }
+  }
+
+  async function login(credentials) {
+    try {
+      const response = await fetch(apiLogin, {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json'
+        },
+        body: JSON.stringify(credentials)
+      });
+      console.log(response);
+      if (!response.ok) {
+        throw new Error('Login failed');
+      }
+
+      const responseData = await response.json();
+      const { token } = responseData.data;
+
+      storeToken(token);
+      await fetchUserInfo();
+      router.push('/dashboard');
+      console.log('Login successful');
+    } catch (error) {
+      console.error('Error logging in:', error);
+      throw error;
+    }
+  }
+
+  function storeToken(token) {
+    localStorage.setItem('token', token);
   }
 
   function logout() {
@@ -45,6 +77,7 @@ export function useAuth() {
     username.value = null; // Set username to null upon logout
     router.push('/login');
   }
+  
 
-  return { username, fetchUserInfo, checkToken, logout };
+  return { username, fetchUserInfo, checkToken, login, logout };
 }

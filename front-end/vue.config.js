@@ -4,8 +4,8 @@ module.exports = defineConfig({
 })
 module.exports = {
   publicPath: process.env.NODE_ENV === 'production'
-  ? '/TaskFrontend/'
-  : '/'
+  ? './'
+  : './'
 }
 // vue.config.js
 const MiniCssExtractPlugin = require("mini-css-extract-plugin");
