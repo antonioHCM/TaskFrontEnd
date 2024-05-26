@@ -1,8 +1,8 @@
 <template>
   <div>
     <h1>
-      Hello, {{ username }}
-      <button @click="logout" style="color: red;">Logout</button>
+       {{ username }}'s Project List:
+      
     </h1>
     <h2>Projects:</h2>
     <ul>
