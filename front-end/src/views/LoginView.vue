@@ -7,7 +7,7 @@
       <button type="submit" :disabled="loading">Login</button>
       <p v-if="errorMessage" class="error-message">{{ errorMessage }}</p>
     </form>
-    <div v-if="loading">Logging in...(Render might be slow)</div>
+    <div v-if="loading">Logging in...</div>
   </div>
 </template>
 

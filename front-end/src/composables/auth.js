@@ -1,11 +1,14 @@
-import { ref } from 'vue';
+/* eslint-disable */
+import { ref, reactive  } from 'vue';
 import { useRouter } from 'vue-router';
 import { getUser, apiLogin } from '../../urls';
 import { jwtDecode } from 'jwt-decode';
 
+const username = ref(null);
+const updateTrigger = ref(0);
 
 export function useAuth() {
-  const username = ref(null);
+ 
   const router = useRouter();
 
   function checkToken() {
@@ -19,7 +22,7 @@ export function useAuth() {
 
   async function fetchUserInfo() {
     try {
-      const token = checkToken(); // Call checkToken to ensure token existence
+      const token = checkToken();
       const decodedToken = jwtDecode(token);
       const userId = decodedToken.id;
 
@@ -36,6 +39,8 @@ export function useAuth() {
       const userData = await response.json();
       username.value = userData.name;
       
+      
+      
     } catch (error) {
       console.error('Error fetching user information:', error);
     }
@@ -50,7 +55,7 @@ export function useAuth() {
         },
         body: JSON.stringify(credentials)
       });
-      console.log(response);
+
       if (!response.ok) {
         throw new Error('Login failed');
       }
@@ -60,13 +65,22 @@ export function useAuth() {
 
       storeToken(token);
       await fetchUserInfo();
+      
+      incrementUpdateTrigger();
+      
       router.push('/dashboard');
-      console.log('Login successful');
+     
+      
     } catch (error) {
       console.error('Error logging in:', error);
       throw error;
     }
   }
+
+  const incrementUpdateTrigger = () => {
+    updateTrigger.value++;
+    console.log(updateTrigger.value);
+  };
 
   function storeToken(token) {
     localStorage.setItem('token', token);
@@ -74,10 +88,12 @@ export function useAuth() {
 
   function logout() {
     localStorage.removeItem('token');
-    username.value = null; // Set username to null upon logout
+    username.value = null;
     router.push('/login');
   }
   
 
-  return { username, fetchUserInfo, checkToken, login, logout };
+
+
+  return { username, fetchUserInfo, checkToken, login, logout, updateTrigger };
 }

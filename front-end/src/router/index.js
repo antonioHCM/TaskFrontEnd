@@ -1,3 +1,4 @@
+/* eslint-disable */
 import { createRouter, createWebHistory } from 'vue-router'
 import HomeView from '../views/HomeView'
 import LoginView from '../views/LoginView'
@@ -11,37 +12,58 @@ const routes = [
   {
     path: '/',
     name: 'Home',
-    component: HomeView
+    component: HomeView,
+    meta: {
+      title: 'Home'
+    }
   },
   {
     path: '/login',
     name: 'Login',
-    component: LoginView
+    component: LoginView,
+    meta: {
+      title: 'Log in'
+    }
   },
   {
     path: '/register',
     name: 'Register',
-    component: RegisterView 
+    component: RegisterView,
+    meta: {
+      title: 'Register'
+    }
   },
   {
     path: '/dashboard',
     name: 'Dashboard',
-    component: DashboardView
+    component: DashboardView,
+    meta: {
+      title: 'Dashboard'
+    }
   },
   {
     path: '/board/:id',
     name: 'Board',
-    component: BoardView
+    component: BoardView,
+    meta: {
+      title: 'My board'
+    }
   },
   {
     path: '/newProject',
     name: 'newProject',
-    component: NewProjectView
+    component: NewProjectView,
+    meta: {
+      title: 'NewProject'
+    }
   },   
   {
     path: '/contact',
     name: 'Contact',
-    component: ContactView
+    component: ContactView,
+    meta: {
+      title: 'Contact'
+    }
   }, 
   {
     path: '/about',
@@ -49,13 +71,21 @@ const routes = [
     // route level code-splitting
     // this generates a separate chunk (about.[hash].js) for this route
     // which is lazy-loaded when the route is visited.
-    component: () => import(/* webpackChunkName: "about" */ '../views/AboutView.vue')
+    component: () => import(/* webpackChunkName: "about" */ '../views/AboutView.vue'),
+    meta: {
+      title: 'About'
+    }
   }
 ]
 
 const router = createRouter({
   history: createWebHistory(process.env.BASE_URL),
   routes
+})
+
+router.beforeEach((to, from, next) => {
+  document.title = to.meta?.title ?? 'Default Title'
+  next()
 })
 
 export default router
