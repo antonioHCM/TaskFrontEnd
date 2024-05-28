@@ -7,6 +7,7 @@ import ContactView from '../views/ContactView'
 import DashboardView from '../views/DashboardView'
 import BoardView from '../views/BoardView'
 import NewProjectView from '../views/NewProjectView'
+import NewColumnView from '../views/NewColumnView'
 
 const routes = [
   {
@@ -56,7 +57,15 @@ const routes = [
     meta: {
       title: 'NewProject'
     }
-  },   
+  },
+  {
+    path: '/newColumn/:projectID',
+    name: 'NewColumn',
+    component: NewColumnView,
+    meta: {
+      title: 'NewColumn'
+    }
+  },  
   {
     path: '/contact',
     name: 'Contact',
@@ -69,7 +78,6 @@ const routes = [
     path: '/about',
     name: 'about',
     // route level code-splitting
-    // this generates a separate chunk (about.[hash].js) for this route
     // which is lazy-loaded when the route is visited.
     component: () => import(/* webpackChunkName: "about" */ '../views/AboutView.vue'),
     meta: {

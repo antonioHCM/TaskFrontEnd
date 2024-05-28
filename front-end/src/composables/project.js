@@ -1,5 +1,5 @@
 import { ref } from 'vue';
-import { getProjectById, getColumnsByProject, getRowsByColumn, addRowApi, updateRowData, deleteRowData } from '../../urls';
+import { getProjectById, getColumnsByProject, getRowsByColumn, addRowApi, updateRowData, deleteRowData, postProject, postColumn } from '../../urls';
 import { useAuth } from '../composables/auth';
 
 export function useBoard(projectId) {
@@ -25,6 +25,57 @@ export function useBoard(projectId) {
       console.error('Error fetching project:', error);
     }
   }
+  const createProject = async (projectData) => {
+    try {
+      const token = checkToken();
+      const response = await fetch(postProject, {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+          'auth-token': token,
+        },
+        body: JSON.stringify(projectData),
+      });
+
+      if (!response.ok) {
+        throw new Error('Failed to create project');
+      }
+
+      const data = await response.json();
+      
+      console.log(data); 
+      return data;
+    } catch (error) {
+      console.error('Error creating project:', error);
+      throw error;
+    }
+  };
+
+  const createColumn = async (columnData) => {
+    try {
+      const token = checkToken();
+      const response = await fetch(postColumn, {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+          'auth-token': token,
+        },
+        body: JSON.stringify(columnData),
+      });
+
+      if (!response.ok) {
+        throw new Error('Failed to create project');
+      }
+
+      const data = await response.json();
+      
+      console.log(data); 
+      return data;
+    } catch (error) {
+      console.error('Error creating project:', error);
+      throw error;
+    }
+  };
 
   async function fetchColumns() {
     columns.value = [];
@@ -153,5 +204,7 @@ export function useBoard(projectId) {
     addRowToColumn,
     updateRow,
     deleteRow,
+    createProject,
+    createColumn
   };
 }
