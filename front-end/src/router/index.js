@@ -7,6 +7,7 @@ import ContactView from '../views/ContactView'
 import DashboardView from '../views/DashboardView'
 import BoardView from '../views/BoardView'
 import NewProjectView from '../views/NewProjectView'
+import NewColumnView from '../views/NewColumnView'
 
 const routes = [
   {
@@ -56,7 +57,15 @@ const routes = [
     meta: {
       title: 'NewProject'
     }
-  },   
+  },
+  {
+    path: '/newColumn/:projectID',
+    name: 'NewColumn',
+    component: NewColumnView,
+    meta: {
+      title: 'NewColumn'
+    }
+  },  
   {
     path: '/contact',
     name: 'Contact',

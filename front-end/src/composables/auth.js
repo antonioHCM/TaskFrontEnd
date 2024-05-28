@@ -5,6 +5,7 @@ import { getUser, apiLogin } from '../../urls';
 import { jwtDecode } from 'jwt-decode';
 
 const username = ref(null);
+const userId = ref(null);
 const updateTrigger = ref(0);
 
 export function useAuth() {
@@ -24,9 +25,9 @@ export function useAuth() {
     try {
       const token = checkToken();
       const decodedToken = jwtDecode(token);
-      const userId = decodedToken.id;
-
-      const response = await fetch(getUser.replace(':id', userId), {
+      userId.value = decodedToken.id;
+      
+      const response = await fetch(getUser.replace(':id', userId.value), {
         headers: {
           'auth-token': token
         }
@@ -37,6 +38,7 @@ export function useAuth() {
       }
 
       const userData = await response.json();
+      
       username.value = userData.name;
       
       
@@ -79,7 +81,7 @@ export function useAuth() {
 
   const incrementUpdateTrigger = () => {
     updateTrigger.value++;
-    console.log(updateTrigger.value);
+    
   };
 
   function storeToken(token) {
@@ -95,5 +97,5 @@ export function useAuth() {
 
 
 
-  return { username, fetchUserInfo, checkToken, login, logout, updateTrigger };
+  return { username, userId, fetchUserInfo, checkToken, login, logout, updateTrigger };
 }
