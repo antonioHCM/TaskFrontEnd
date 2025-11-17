@@ -66,9 +66,6 @@ Implement your changes and commit them with clear messages.
 
 Submit a pull request (PR) for review.
 
-📜 License
-
-This project is licensed under the MIT License.
 
 💡 Happy Coding! 🚀
 
